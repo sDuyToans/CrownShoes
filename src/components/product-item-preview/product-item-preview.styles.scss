@@ -1,0 +1,14 @@
+.product-item-preview-container{
+    text-align: center;
+    max-width: 100%;
+    padding: 20px 50px;
+    margin-bottom: 20px;
+    h2{
+        margin-bottom: 20px;
+    }
+    .products-item-container{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+}
