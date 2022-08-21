@@ -1,6 +1,8 @@
 import './products-preview.styles.scss';
-import { ShopData } from '../../shop-data';
+
 import ProductItemPreview from '../product-item-preview/product-item-preview.component';
+import ShopData from '../../shop-data';
+
 const ProductPreview = () => {
     return(
         <div className='productpreview-container'>

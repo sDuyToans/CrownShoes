@@ -1,0 +1,11 @@
+.auth-container{
+    background: linear-gradient(90deg, #C7C5F4, #776BCC);	
+    display: flex;
+    justify-content: space-between;
+    .auth-or{
+        font-size: 100px;
+        position: absolute;
+        left: 54%;
+        top: 50%;
+    }
+}

@@ -1,4 +1,4 @@
-export const ShopData = [
+const ShopData = [
     {
         title: 'Nikes',
         items: [
@@ -390,3 +390,5 @@ export const ShopData = [
         ]
     }
 ]
+
+export default ShopData;
