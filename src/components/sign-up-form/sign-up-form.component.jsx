@@ -1,32 +1,73 @@
+import { useState } from "react";
 import "./sign-up-form.component.styles.scss";
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
+
+const defaultFormFields = {
+  displayName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const SignUpForm = () => {
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { displayName, email, password, confirmPassword } = formFields;
+  const resetFormFields = () =>{
+    setFormFields(defaultFormFields);
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if(!password === confirmPassword){
+      alert('your password and confirm password do not match');
+      return;
+    }
+    try {
+      const { user } = await createAuthUserWithEmailAndPassword(email, password);
+      await createUserDocumentFromAuth(user, { displayName });
+      resetFormFields();
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields({...formFields, [name]: value})
+  };
   return (
     <div className="form_wrapper">
       <div className="form_container">
         <div className="title_container">
           <h2>Registration An Account</h2>
         </div>
-        <div className="row clearfix">
-          <div className>
-            <form>
+        <div className="row clearfix" >
+          <div>
+            <form onSubmit={handleSubmit}>
+              <div className="input_field">
+                {" "}
+                <span>
+                  <i aria-hidden="true" className="fa fa-user" />
+                </span>
+                <input
+                  type="displayName"
+                  name="displayName"
+                  placeholder="displayName"
+                  required
+                  onChange={handleChange}
+                  value={displayName}
+                />
+              </div>
               <div className="input_field">
                 {" "}
                 <span>
                   <i aria-hidden="true" className="fa fa-envelope" />
                 </span>
-                <input type="email" name="email" placeholder="Email" required />
-              </div>
-              <div className="input_field">
-                {" "}
-                <span>
-                  <i aria-hidden="true" className="fa fa-lock" />
-                </span>
                 <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
                   required
+                  onChange={handleChange}
+                  value={email}
                 />
               </div>
               <div className="input_field">
@@ -37,8 +78,24 @@ const SignUpForm = () => {
                 <input
                   type="password"
                   name="password"
-                  placeholder="Re-type Password"
+                  placeholder="Password"
+                  onChange={handleChange}
                   required
+                  value={password}
+                />
+              </div>
+              <div className="input_field">
+                {" "}
+                <span>
+                  <i aria-hidden="true" className="fa fa-lock" />
+                </span>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  onChange={handleChange}
+                  required
+                  value={confirmPassword}
                 />
               </div>
               <div className="row clearfix">
@@ -88,7 +145,9 @@ const SignUpForm = () => {
                 <input type="checkbox" id="cb2" />
                 <label htmlFor="cb2">I want to receive the newsletter</label>
               </div>
-              <input className="button" type="submit" defaultValue="Register" />
+              <button type="submit">
+                Sign Up
+              </button>
             </form>
           </div>
         </div>

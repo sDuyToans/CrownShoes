@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { getFirestore, collection, writeBatch, doc, getDoc, setDoc } from "firebase/firestore";
 
 //firebase setup config from console web
@@ -33,12 +33,12 @@ export const signInWithFacebookPopup = () =>
   signInWithPopup(auth, facebookProvider);
 
 //lưu dữ liệu user vào firebase database
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
   const userDocRef = doc(db, 'users', userAuth.uid);
-  console.log(userDocRef)
+  if(!userDocRef) return;
+ 
   const userSnapShot = await getDoc(userDocRef);
-  console.log(userSnapShot);
-  console.log(userSnapShot.exists())
+  
   // Nếu có dữ liệu người dùng rồi thì trả về userDocRef
   //Nếu dữ liệu người dùng chưa tồn tại thì tạo 1 user từ data của userAuth
   if(!userSnapShot.exists()){
@@ -48,7 +48,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
       await setDoc(userDocRef, {
         displayName,
         email,
-        createAt
+        createAt,
+        ...additionalInformation
       })
     } catch (error) {
       console.log('error creating the user', error.message)
@@ -56,7 +57,16 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   }
   return userDocRef;
 }
-
+// Tạo new user với email and pass word
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if(!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password)
+}
+//Signin with email and password
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if(!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password)
+}
 
 //firebase: lưu trữ dữ liệu shoe lên firebasedatabase
 export const addProductsCollectionAndDocuments = async (

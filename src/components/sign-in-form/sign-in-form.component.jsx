@@ -1,31 +1,66 @@
-import { signInWithGooglePopup, signInWithFacebookPopup, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
-import "./sign-in-form.component.styles.scss";
+import { useState } from "react";
+import { signInWithGooglePopup, signInWithFacebookPopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 
+import "./sign-in-form.component.styles.scss";
+const defaultFormFields = {
+  email: '',
+  password: ''
+}
 const SignInForm = () => {
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { email, password } = formFields;
+  const resetFormFields = () =>{
+    setFormFields(defaultFormFields);
+  }
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
-
+    await createUserDocumentFromAuth(user);
   }
   const logFacebookUser = async () => {
     const response = await signInWithFacebookPopup();
     console.log(response);
     
   }
-
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields({...formFields, [name]: value})
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await signInAuthUserWithEmailAndPassword(email, password);
+      console.log(response)
+      resetFormFields();
+    } catch (error) {
+      switch(error.code) {
+        case 'auth/wrong-password':
+          alert('incorrect password for email');
+          break;
+        case 'auth/user-not-found':
+          alert('no user associated with this email');
+          break;
+        default: 
+          console.log(error)
+      }
+     
+    }
+  }
   return (
     <div className="sign-in-container">
       <div className="screen">
        
         <div className="screen__content">
-          <form className="login">
+          <form className="login" onSubmit={handleSubmit}>
           <h2>Already have an acount ?</h2>
             <div className="login__field">
               <i className="login__icon fas fa-user" />
               <input
                 type="text"
                 className="login__input"
-                placeholder="User name / Email"
+                placeholder="Email"
+                name='email'
+                value={email}
+                onChange={handleChange}
               />
             </div>
             <div className="login__field">
@@ -34,9 +69,12 @@ const SignInForm = () => {
                 type="password"
                 className="login__input"
                 placeholder="Password"
+                name="password"
+                value={password}
+                onChange={handleChange}
               />
             </div>
-            <button className="button login__submit">
+            <button className="button login__submit" type="submit">
               <span className="button__text">Log In Now</span>
               <i className="button__icon fas fa-chevron-right" />
             </button>
