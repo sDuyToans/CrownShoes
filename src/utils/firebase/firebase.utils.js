@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { getFirestore, collection, writeBatch, doc, getDoc, setDoc } from "firebase/firestore";
 
 //firebase setup config from console web
@@ -66,6 +66,10 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if(!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password)
+}
+//Signout
+export const signOutUser = async () => {
+  await signOut(auth);
 }
 
 //firebase: lưu trữ dữ liệu shoe lên firebasedatabase

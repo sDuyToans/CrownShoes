@@ -1,64 +1,77 @@
+
 import { useState } from "react";
-import { signInWithGooglePopup, signInWithFacebookPopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
+import { connect, useDispatch } from "react-redux";
+import {
+  signInWithGooglePopup,
+  signInWithFacebookPopup,
+  createUserDocumentFromAuth,
+  signInAuthUserWithEmailAndPassword,
+} from "../../utils/firebase/firebase.utils";
 
 import "./sign-in-form.component.styles.scss";
 const defaultFormFields = {
-  email: '',
-  password: ''
-}
+  email: "",
+  password: "",
+};
 const SignInForm = () => {
+  const action = {
+    type: 'CURRENT_USER_ON',
+    payload: true
+  }
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const resetFormFields = () =>{
+  const resetFormFields = () => {
     setFormFields(defaultFormFields);
-  }
+  };
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
     await createUserDocumentFromAuth(user);
-  }
+    dispatch(action);
+  };
   const logFacebookUser = async () => {
     const response = await signInWithFacebookPopup();
     console.log(response);
-    
-  }
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormFields({...formFields, [name]: value})
-  }
+    setFormFields({ ...formFields, [name]: value });
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password);
-      console.log(response)
+      const {user} = await signInAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      dispatch(action);
       resetFormFields();
     } catch (error) {
-      switch(error.code) {
-        case 'auth/wrong-password':
-          alert('incorrect password for email');
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("incorrect password for email");
           break;
-        case 'auth/user-not-found':
-          alert('no user associated with this email');
+        case "auth/user-not-found":
+          alert("no user associated with this email");
           break;
-        default: 
-          console.log(error)
+        default:
+          console.log(error);
       }
-     
     }
-  }
+  };
   return (
     <div className="sign-in-container">
       <div className="screen">
-       
         <div className="screen__content">
           <form className="login" onSubmit={handleSubmit}>
-          <h2>Already have an acount ?</h2>
+            <h2>Already have an acount ?</h2>
             <div className="login__field">
               <i className="login__icon fas fa-user" />
               <input
                 type="text"
                 className="login__input"
                 placeholder="Email"
-                name='email'
+                name="email"
                 value={email}
                 onChange={handleChange}
               />
@@ -82,8 +95,16 @@ const SignInForm = () => {
           <div className="social-login">
             <h3>log in via</h3>
             <div className="social-icons">
-              <a href="#" className="social-login__icon fab fa-google" onClick={logGoogleUser}/>
-              <a href="#" className="social-login__icon fab fa-facebook"  onClick={logFacebookUser}/>
+              <a
+                href="#"
+                className="social-login__icon fab fa-google"
+                onClick={logGoogleUser}
+              />
+              <a
+                href="#"
+                className="social-login__icon fab fa-facebook"
+                onClick={logFacebookUser}
+              />
               <a href="#" className="social-login__icon fab fa-twitter" />
             </div>
           </div>
@@ -98,4 +119,7 @@ const SignInForm = () => {
     </div>
   );
 };
-export default SignInForm;
+const mapStateToProps = (state) => {
+  return {currentUser: state.userReducer.currentUser}
+};
+export default connect(mapStateToProps)(SignInForm);
