@@ -134,6 +134,7 @@ $grey:#cccccc;
     label{
         margin-right: 1em;
         position: relative;
+        font-size: 20px;
         &:before {
           content: "";
           display: inline-block;
@@ -184,6 +185,7 @@ $grey:#cccccc;
 .radio_option {
   label {
       margin-right: 1em;
+      font-size: 25px;
     &:before {
       content: "";
       display: inline-block;

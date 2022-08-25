@@ -1,3 +1,4 @@
+import Button from '../Button/Button.component';
 import './product-item.styles.scss';
 
 const ProductItem = ({ product }) => {
@@ -9,6 +10,7 @@ const ProductItem = ({ product }) => {
                 <span className='item-name'>{name}</span>
                 <span className='item-price'>{price} $</span>
             </div>
+            <Button/>
         </div>
     )
 }

@@ -151,8 +151,9 @@ const SignUpForm = () => {
                 <input type="checkbox" id="cb2" />
                 <label htmlFor="cb2">I want to receive the newsletter</label>
               </div>
-              <button type="submit">
+              <button type="submit" className="login__submit" style={{width: '50%'}}>
                 Sign Up
+                <i className="button__icon fas fa-chevron-right" />
               </button>
             </form>
           </div>

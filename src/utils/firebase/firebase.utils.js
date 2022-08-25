@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { getFirestore, collection, writeBatch, doc, getDoc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, writeBatch, doc, getDoc, setDoc, query, getDocs } from "firebase/firestore";
 
 //firebase setup config from console web
 const firebaseConfig = {
@@ -75,7 +75,8 @@ export const signOutUser = async () => {
 //firebase: lưu trữ dữ liệu shoe lên firebasedatabase
 export const addProductsCollectionAndDocuments = async (
     collectionKey,
-    objectsToAdd
+    objectsToAdd,
+    field
   ) => {
     const collectionRef = collection(db, collectionKey);
     const batch = writeBatch(db);
@@ -86,3 +87,15 @@ export const addProductsCollectionAndDocuments = async (
     await batch.commit();
     console.log("done");
   };
+// lấy data từ firebase
+export const getShoesDocument = async () => {
+  const collectionRef = collection(db, 'shoes');
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {})
+  return categoryMap;
+}
