@@ -1,12 +1,14 @@
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
 import "./navigation.styles.scss";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 const Navigation = ({currentUser}) => {
-  console.log(currentUser);
   const dispatch = useDispatch();
+  const isCartOpen = useSelector(state => state.cartReducer.isCartOpen)
   const logOut = () => {
     signOutUser();
     const action = {
@@ -21,11 +23,8 @@ const Navigation = ({currentUser}) => {
         return ( <Link as={"span"} onClick={logOut} to="#" style={{ textDecoration: "none", color: "#000" }}>
         SIGN OUT
       </Link>)
-      break;
-      case false: 
-      return (<Link  to="/auth" style={{ textDecoration: "none", color: "#000" }}>SIGN IN</Link>
-      )
-      break;
+      default: 
+      return (<Link  to="/auth" style={{ textDecoration: "none", color: "#000" }}>SIGN IN</Link>)
     }
   }
   return (
@@ -39,6 +38,8 @@ const Navigation = ({currentUser}) => {
             SHOP
           </Link>
           {renderCurrentUser(currentUser)}
+          <CartIcon/>
+          { isCartOpen && <CartDropdown/>}
         </div>
       </div>
       <Outlet />
