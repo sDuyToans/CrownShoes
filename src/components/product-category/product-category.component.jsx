@@ -4,9 +4,10 @@ import { ShopData } from '../../shop-data';
 import { useSelector } from 'react-redux';
 import ProductCategoryCard from '../product-category-card/product-category-card.component';
 import { useEffect, useState } from 'react';
+import { selectShoesCategory } from '../../store/shoes/shoes.selector';
 const ProductCategory = () => {
     const { product } = useParams();
-    const dataShoes = useSelector(state => state.shoesReducer.shoesCategories);
+    const dataShoes = useSelector(selectShoesCategory);
     const [products, setProducts ] = useState(dataShoes[product]);
     useEffect(() => {
         setProducts(dataShoes[product]);

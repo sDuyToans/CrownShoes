@@ -28,8 +28,29 @@
       scrollbar-width: none;
     }
   
-    button {
+    .base-button {
+      min-width: 165px;
+      width: auto;
+      height: 50px;
+      letter-spacing: 0.5px;
+      line-height: 50px;
+      padding: 0 35px 0 35px;
       margin-top: auto;
+      font-size: 10px;
+      background-color: white;
+      color: black;
+      text-transform: uppercase;
+      font-weight: bolder;
+      border: 1px solid black;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        background-color: black;
+        color: white;
+        border: none;
+      }
     }
   }
   

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   signInWithGooglePopup,
   signInWithFacebookPopup,
@@ -14,10 +14,6 @@ const defaultFormFields = {
   password: "",
 };
 const SignInForm = () => {
-  const action = {
-    type: 'CURRENT_USER_ON',
-    payload: true
-  }
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
@@ -27,7 +23,7 @@ const SignInForm = () => {
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
     await createUserDocumentFromAuth(user);
-    dispatch(action);
+
   };
   const logFacebookUser = async () => {
     const response = await signInWithFacebookPopup();
@@ -44,7 +40,6 @@ const SignInForm = () => {
         email,
         password
       );
-      dispatch(action);
       resetFormFields();
     } catch (error) {
       switch (error.code) {
@@ -119,7 +114,4 @@ const SignInForm = () => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
-  return {currentUser: state.userReducer.currentUser}
-};
-export default connect(mapStateToProps)(SignInForm);
+export default SignInForm;

@@ -1,15 +1,16 @@
-
+import { SHOES_ACTION_TYPES }  from './shoes.type'
 const defaultState = {
     shoesCategories: {}
 }
 
-export const shoesReducer = (state = defaultState, action) => {
+export const shoesReducer = (state = defaultState, action = {}) => {
     const { type, payload } = action;
     switch(type){
-        case 'FECTH_CATEGORY': 
-        const { shoesCategory } = payload;
-        state.shoesCategories = shoesCategory;
-        return {...state}
+        case SHOES_ACTION_TYPES.SET_SHOES_CATEGORIES: 
+        return {
+            ...state,
+            shoesCategories: payload
+        }
         default: 
         return state;
     }

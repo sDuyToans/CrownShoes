@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import CartItem from '../cart-item/cart-item.component';
 import './cart-items.styles.scss';
-
+import { selectCartItems } from '../../store/cart/cart.selector.js'
 const CartItems = () => {
-    const itemsCart = useSelector(state => state.cartReducer.itemsCart);
+    const itemsCart = useSelector(selectCartItems);
     return (
         <div className="cart-items">
             {

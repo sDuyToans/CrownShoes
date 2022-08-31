@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux';
 import ItemCheckout from '../../components/item-checkout/item-checkout.component';
+import { selectCartItems, selectCartTotal } from '../../store/cart/cart.selector';
 import './checkout.styles.scss';
 const CheckOut = () => {
-    const itemsCheckout = useSelector(state => state.cartReducer.itemsCart);
-    const cartTotal = (cartItems) => {
-        return cartItems.reduce((total, cartItem) => total + cartItem.quantity * cartItem.price, 0)
-    }
-    
+    const itemsCheckout = useSelector(selectCartItems);
+    const cartTotal = useSelector(selectCartTotal)
     return (
         <div className="checkout-container">
             <div className="checkout-header">
@@ -28,7 +26,7 @@ const CheckOut = () => {
             </div>
             {itemsCheckout.map((item, index) => <ItemCheckout item={item} key={index}/>)}
             <div className="total">
-                Total: {cartTotal(itemsCheckout)}$
+                Total: {cartTotal}$
             </div>
         </div>
     )

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const DirectoryItem = ({ p }) => {
   const { imageUrl, title, route } = p;
   return (
-    <Link className="directory-item-container" to={route}>
+    <Link className="directory-item-container" to={route} style={{ textDecoration: "none", color: "#000" }}>
       <div
         className='background-image'
         style={{

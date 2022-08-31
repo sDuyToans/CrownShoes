@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import ProductItem from "../product-item/product-item.component";
 import "./product-item-preview.styles.scss";
 import { useSelector } from "react-redux";
+import { selectShoesCategory } from "../../store/shoes/shoes.selector";
 
 const ProductItemPreview = () => {
-  const dataShoes = useSelector((state) => state.shoesReducer.shoesCategories);
+  const dataShoes = useSelector(selectShoesCategory);
   return (
     <>
       {Object.keys(dataShoes).map((title, index) => {

@@ -1,30 +1,26 @@
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
-import { connect, useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
 import "./navigation.styles.scss";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
-const Navigation = ({currentUser}) => {
-  const dispatch = useDispatch();
-  const isCartOpen = useSelector(state => state.cartReducer.isCartOpen)
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
+const Navigation = () => {
+  const isCartOpen = useSelector(selectIsCartOpen);
+  const currentUser = useSelector(selectCurrentUser);
   const logOut = () => {
     signOutUser();
-    const action = {
-      type: "LOG_OUT",
-      payload: false,
-    };
-    dispatch(action);
   };
   const renderCurrentUser = (currentUser) => {
     switch(currentUser){
-      case true:
-        return ( <Link as={"span"} onClick={logOut} to="#" style={{ textDecoration: "none", color: "#000" }}>
-        SIGN OUT
-      </Link>)
+      case null: return (<Link  to="/auth" style={{ textDecoration: "none", color: "#000" }}>SIGN IN</Link>)
       default: 
-      return (<Link  to="/auth" style={{ textDecoration: "none", color: "#000" }}>SIGN IN</Link>)
+      return ( <Link as={"span"} onClick={logOut} to="#" style={{ textDecoration: "none", color: "#000" }}>
+      SIGN OUT
+      </Link>)
     }
   }
   return (
@@ -46,7 +42,4 @@ const Navigation = ({currentUser}) => {
     </>
   );
 };
-const mapStateToProps = (state) => {
-  return { currentUser: state.userReducer.currentUser };
-};
-export default connect(mapStateToProps)(Navigation);
+export default Navigation;

@@ -9,7 +9,7 @@ const CartDropdown = () => {
     return (
         <div className='cart-dropdown-container'>
             <CartItems/>
-            <button onClick={goToCheckOutHandler}>Go to checkout</button>
+            <button onClick={goToCheckOutHandler} className='base-button'>Go to checkout</button>
         </div>
     )
 }
