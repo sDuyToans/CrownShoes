@@ -1,4 +1,15 @@
+.find-product{
+    outline: none;
+    padding: 10px;
+    width: 300px;
+    line-height: 30px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
 .product-category-card-container{
+    .sorry-search{
+        text-align: center;
+    }
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;

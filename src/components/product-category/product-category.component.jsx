@@ -12,12 +12,25 @@ const ProductCategory = () => {
     useEffect(() => {
         setProducts(dataShoes[product]);
     }, [dataShoes[product]])
+    const [productsToShow, setProductsToShow] = useState(products);
+    const [searchFields, setSearchFields] = useState('');
+    const onChangeHandler = (event) => {
+        const searchFiedlsString = event.target.value.toLocaleLowerCase();
+        setSearchFields(searchFiedlsString);
+    }
+    useEffect(() => {
+        const newProductsToShow = products.filter(product => {
+            return product.name.toLocaleLowerCase().includes(searchFields);
+        })
+        setProductsToShow(newProductsToShow);
+    }, [products, searchFields])
     return(
         <div className="product-category-container">
             <div className="product-category-title">
                 {product}
             </div>
-            <ProductCategoryCard products={products}/>
+            <input type="text" className="find-product" placeholder="Find by name" onChange={onChangeHandler}/>
+            <ProductCategoryCard products={productsToShow}/>
         </div>
     )
 }
