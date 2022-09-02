@@ -15,7 +15,7 @@ const categories = [
     },
     {
       "id": 3,
-      "title": "new balances",
+      "title": "balances",
       "imageUrl": "https://images.unsplash.com/photo-1613380657175-407fc07c69c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fG5ldyUyMGJhbGFuY2UlMjBzaG9lc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
       route: `shop/new%20balances`
     },

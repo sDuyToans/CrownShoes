@@ -11,6 +11,16 @@ $grey:#cccccc;
 	}
 }
 .form_wrapper {
+  @media only screen and (max-width: 768px){
+    width: 400px;
+  }
+  @media only screen and (max-width: 600px){
+    width: 400px;
+    height: 800px;
+  }
+  @media only screen and (max-width: 992px){
+    margin-right: 10px;
+  }
 	background: #fff;
 	width: 500px;
 	height: 700px;

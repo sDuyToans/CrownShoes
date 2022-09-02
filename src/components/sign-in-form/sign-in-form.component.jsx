@@ -1,6 +1,8 @@
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+
+import { Link } from "react-router-dom";
+
 import {
   signInWithGooglePopup,
   signInWithFacebookPopup,
@@ -14,7 +16,6 @@ const defaultFormFields = {
   password: "",
 };
 const SignInForm = () => {
-  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
   const resetFormFields = () => {
@@ -90,17 +91,17 @@ const SignInForm = () => {
           <div className="social-login">
             <h3>log in via</h3>
             <div className="social-icons">
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="social-login__icon fab fa-google"
                 onClick={logGoogleUser}
               />
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="social-login__icon fab fa-facebook"
                 onClick={logFacebookUser}
               />
-              <a href="#" className="social-login__icon fab fa-twitter" />
+              <Link to="#" className="social-login__icon fab fa-twitter" />
             </div>
           </div>
         </div>
