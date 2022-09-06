@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 import { createUserDocumentFromAuth, getShoesDocument, onAuthStateChangedListener } from './utils/firebase/firebase.utils';
 import { useEffect } from 'react';
 import { setCurrentUser } from './store/user/user.action';
-import { fetchShoesCategory } from './store/shoes/shoes.action';
 // import { useEffect } from 'react';
 // import { addProductsCollectionAndDocuments } from './utils/firebase/firebase.utils';
 // import ShopData from './shop-data';
@@ -20,13 +19,6 @@ function App() {
   //   addProductsCollectionAndDocuments('shoes', ShopData);
   // }, [])
   const dispatch = useDispatch();
-  useEffect(() => {
-        const getShoesCategory = async () => {
-            const categoryMap = await getShoesDocument();
-            dispatch(fetchShoesCategory(categoryMap));
-        }
-        getShoesCategory();
-    }, []);
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
       if(user) {

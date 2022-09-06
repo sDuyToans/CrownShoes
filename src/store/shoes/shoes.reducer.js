@@ -1,15 +1,29 @@
 import { SHOES_ACTION_TYPES }  from './shoes.type'
 const defaultState = {
-    shoesCategories: {}
+    shoesCategories: {},
+    isLoading: false,
+    error: null
 }
 
 export const shoesReducer = (state = defaultState, action = {}) => {
     const { type, payload } = action;
     switch(type){
-        case SHOES_ACTION_TYPES.SET_SHOES_CATEGORIES: 
+        case SHOES_ACTION_TYPES.FETCH_SHOES_CATEGORIES_START: 
+        return {
+            ...state, 
+            isLoading: true
+        }
+        case SHOES_ACTION_TYPES.FETCH_SHOES_CATEGORIES_SUCCESS: 
         return {
             ...state,
-            shoesCategories: payload
+            shoesCategories: payload,
+            isLoading: false
+        }
+        case SHOES_ACTION_TYPES.FETCH_SHOES_CATEGORIES_SUCCESS: 
+        return {
+            ...state,
+            error: payload,
+            isLoading: false
         }
         default: 
         return state;

@@ -2,13 +2,16 @@ import { Link } from "react-router-dom";
 import ProductItem from "../product-item/product-item.component";
 import "./product-item-preview.styles.scss";
 import { useSelector } from "react-redux";
-import { selectShoesCategory } from "../../store/shoes/shoes.selector";
+import { selectIsLoading, selectShoesCategoriesMap, selectShoesCategory } from "../../store/shoes/shoes.selector";
+import Spinner from "../spinner/spinner.component";
 
 const ProductItemPreview = () => {
-  const dataShoes = useSelector(selectShoesCategory);
+  const dataShoes = useSelector(selectShoesCategoriesMap);
+  const isLoading = useSelector(selectIsLoading);
   return (
     <>
-      {Object.keys(dataShoes).map((title, index) => {
+      { isLoading ? <Spinner/>
+      : (Object.keys(dataShoes).map((title, index) => {
         return (
           <div className="product-item-preview-container" key={index}>
             <h2>
@@ -24,7 +27,8 @@ const ProductItemPreview = () => {
             </div>
           </div>
         );
-      })}
+      }))
+    }
     </>
   );
 };
