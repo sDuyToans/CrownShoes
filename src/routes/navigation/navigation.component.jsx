@@ -3,7 +3,7 @@ import {useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
 import "./navigation.styles.scss";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
+
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import { selectCurrentUser } from "../../store/user/user.selector";

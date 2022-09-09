@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import ProductItem from "../product-item/product-item.component";
 import "./product-item-preview.styles.scss";
 import { useSelector } from "react-redux";
-import { selectIsLoading, selectShoesCategoriesMap, selectShoesCategory } from "../../store/shoes/shoes.selector";
+import { selectIsLoading, selectShoesCategoriesMap} from "../../store/shoes/shoes.selector";
 import Spinner from "../spinner/spinner.component";
 
 const ProductItemPreview = () => {

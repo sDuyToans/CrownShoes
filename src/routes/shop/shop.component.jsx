@@ -12,7 +12,7 @@ const Shop = () => {
     const dispatch = useDispatch();
     useEffect(() => {
               dispatch(fetchShoesCategoriesStart());
-      }, []);
+      }, [dispatch]);
     return (
         <Routes>
             <Route index element={<ProductPreview/>}/>

@@ -19,7 +19,7 @@ export const shoesReducer = (state = defaultState, action = {}) => {
             shoesCategories: payload,
             isLoading: false
         }
-        case SHOES_ACTION_TYPES.FETCH_SHOES_CATEGORIES_SUCCESS: 
+        case SHOES_ACTION_TYPES.FETCH_SHOES_CATEGORIES_FAILED: 
         return {
             ...state,
             error: payload,

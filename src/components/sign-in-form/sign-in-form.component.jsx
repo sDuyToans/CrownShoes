@@ -4,13 +4,9 @@ import { useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
 import { emailSignInStart, googleSignInStart } from "../../store/user/user.action";
-import { onEmailSignInStart } from "../../store/user/user.saga";
 
 import {
-  signInWithGooglePopup,
   signInWithFacebookPopup,
-  createUserDocumentFromAuth,
-  signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
 import "./sign-in-form.component.styles.scss";
