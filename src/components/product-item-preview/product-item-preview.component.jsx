@@ -10,7 +10,7 @@ const ProductItemPreview = () => {
   const isLoading = useSelector(selectIsLoading);
   return (
     <>
-      { isLoading ? <Spinner/>
+      {/* { isLoading ? <Spinner/>
       : (Object.keys(dataShoes).map((title, index) => {
         return (
           <div className="product-item-preview-container" key={index}>
@@ -28,7 +28,7 @@ const ProductItemPreview = () => {
           </div>
         );
       }))
-    }
+    } */}
     </>
   );
 };
