@@ -1,7 +1,10 @@
 
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
+import { emailSignInStart, googleSignInStart } from "../../store/user/user.action";
+import { onEmailSignInStart } from "../../store/user/user.saga";
 
 import {
   signInWithGooglePopup,
@@ -16,15 +19,14 @@ const defaultFormFields = {
   password: "",
 };
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
-
+    dispatch(googleSignInStart());
   };
   const logFacebookUser = async () => {
     const response = await signInWithFacebookPopup();
@@ -37,10 +39,7 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const {user} = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
+      dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
       switch (error.code) {

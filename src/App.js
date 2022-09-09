@@ -7,9 +7,10 @@ import Shop from './routes/shop/shop.component';
 import ProductCategory from './components/product-category/product-category.component';
 import CheckOut from './routes/checkout/checkout.component';
 import { useDispatch } from 'react-redux';
-import { createUserDocumentFromAuth, getShoesDocument, onAuthStateChangedListener } from './utils/firebase/firebase.utils';
+import { getCurrentUser} from './utils/firebase/firebase.utils';
 import { useEffect } from 'react';
-import { setCurrentUser } from './store/user/user.action';
+import { checkUserSession } from './store/user/user.action';
+
 // import { useEffect } from 'react';
 // import { addProductsCollectionAndDocuments } from './utils/firebase/firebase.utils';
 // import ShopData from './shop-data';
@@ -20,13 +21,7 @@ function App() {
   // }, [])
   const dispatch = useDispatch();
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      if(user) {
-        createUserDocumentFromAuth(user);
-      }
-      dispatch(setCurrentUser(user));
-    });
-    return  unsubscribe;
+    dispatch(checkUserSession());
   }, [dispatch])
   return (
     <Routes>
